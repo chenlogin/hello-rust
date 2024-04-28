@@ -15,7 +15,7 @@ struct Position {
   y: i32,  
   width: u32,  
   height: u32,  
-} 
+}
 
 //main 函数是程序的入口点
 fn main() {
@@ -155,9 +155,9 @@ fn recognize_image() -> Vec<u32> {
   }
 
   // 保存处理后的图像，可以是不同格式
-  let binary_img_path = cwd.join("src/images/binary_img.jpg");  
+  let binary_img_path = cwd.join("tests/images/binary_img.jpg");  
   binary_image.save(binary_img_path).unwrap();
-  let rgba_img_path = cwd.join("src/images/rgba_img.jpg");  
+  let rgba_img_path = cwd.join("tests/images/rgba_img.jpg");  
   img_roi_single_region.save(rgba_img_path).unwrap();
   return identify_result;
 }

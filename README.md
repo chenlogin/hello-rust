@@ -14,6 +14,7 @@ cargo new hello-rust 创建hello-rust项目
 cargo build 构建项目
 cargo run 编译并运行项目
 cargo test 测试项目
+cargo check 检查代码是否可以编译通过，不实际生成可执行文件
 cargo doc --open 本地文档
 cargo publish 将库发布到 crates.io
 ```
