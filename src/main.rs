@@ -64,6 +64,9 @@ fn recognize_image() -> Vec<u32> {
   let mut img_roi_single_region = DynamicImage::crop(&mut img, single_rects.left() as u32, single_rects.top() as u32, single_rects.width(), single_rects.height());
   
   //将一个彩色图像转换为灰度图像，灰度值为8位（即0-255）的整数值
+  //加权法：Gray = 0.3*R + 0.59*G + 0.11*B
+  //均值法：Gray = (R + G + B) / 3
+  //最大值法：Gray = max(R, G, B)
   let gray_image: image::ImageBuffer<Luma<u8>, Vec<u8>> = img_roi_single_region.to_luma8(); 
 
   // 高斯模糊
