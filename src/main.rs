@@ -164,3 +164,27 @@ fn recognize_image() -> Vec<u32> {
   img_roi_single_region.save(rgba_img_path).unwrap();
   return identify_result;
 }
+
+/// 以左上角（x,y,w,h）为基准，遍历所给区域附近范围，默认5*5
+/// 查找最大填涂率(当识别范围不准时，扩大一定查找范围计算填涂率，获取最大值)
+fn find_max_fillrate_in_neighborhood(integral_image: &ImageBuffer<Luma<i64>, Vec<i64>>, coordinate: &Coordinate, original_fillrate: f32) -> f32 {
+    let mut new_fillrate = original_fillrate;
+    let x = coordinate.x;
+    let y = coordinate.y;
+    let w = coordinate.w as u32;
+    let h = coordinate.h as u32;
+    //跨度向下取整
+    let space = CONFIG.image_blackfill.neighborhood_size / 2;
+    // 遍历x轴方向从x-2到x+2
+    for i in (x - space as i32)..=(x + space as i32) {
+        // 遍历y轴方向从y-2到y+2
+        for j in (y - space as i32)..=(y + space as i32) {
+            let rect = Rect::at(i, j).of_size(w, h);
+            let fillrate = calculate_fill_ratio(integral_image, rect);
+            if new_fillrate < fillrate {
+                new_fillrate = fillrate;
+            }
+        }
+    }
+    return new_fillrate;
+}
